@@ -10,7 +10,7 @@ header ul{
     align-items: center;
     justify-content: space-evenly;
     list-style: none;
-    border: 10px groove black;
+    border: 5px solid black;
     padding: 15px;
 }
 
@@ -22,12 +22,13 @@ header ul{
 
 .calculator-frame {
     border: 10px solid black;
+    border-radius: 10%;
+    background-color: lightseagreen;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 10px 10px;
-    margin: 20px auto;
+    padding: 10px;
 }
 
 #mainCalcDisplay {
@@ -46,6 +47,8 @@ header ul{
     justify-content: center;
     margin: 10px auto;
     align-self: stretch;
+    padding: 10px;
+    gap: 10px;
 }
 
 .controls-container button {
@@ -54,11 +57,16 @@ header ul{
     padding: 10px;
 }
 
-.operands-buttons-container {
+.operations-buttons-container {
     border: 1px solid white;
     background-color: grey;
     display: flex;
     flex-direction: column;
+}
+
+.operations-buttons-container button {
+    background-color: lightslategray;
+    color: white;
 }
 
 .num-buttons-container {
@@ -75,4 +83,5 @@ header ul{
 
 .sub-controls-container {
     height: max-content;
+    align-self: center;
 }
