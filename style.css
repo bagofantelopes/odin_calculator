@@ -1,9 +1,78 @@
 body {
     background-color: lightblue;
+    padding: 10px;
+    margin: 10px auto;
+}
+
+header ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    list-style: none;
+    border: 10px groove black;
+    padding: 15px;
 }
 
 .main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calculator-frame {
+    border: 10px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    margin: 20px auto;
+}
+
+#mainCalcDisplay {
+    display: inherit;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+}
+
+#mainCalcDisplay input {
+    text-align: center;
+}
+
+.controls-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+    align-self: stretch;
+}
+
+.controls-container button {
+    width: 50px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.operands-buttons-container {
+    border: 1px solid white;
     background-color: grey;
     display: flex;
-    
+    flex-direction: column;
+}
+
+.num-buttons-container {
+    border: 1px solid white;
+    background-color: grey;
+    min-height: 100%;
+    align-items: stretch;
+}
+
+.advanced-operations-container {
+    border: 1px solid white;
+    height: 100px;
+}
+
+.sub-controls-container {
+    height: max-content;
 }
