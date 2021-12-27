@@ -32,10 +32,18 @@ header ul{
 }
 
 #mainCalcDisplay {
+    background-color: white;
     display: inherit;
     justify-content: center;
     width: 100%;
     height: 50px;
+}
+
+#mainCalcDisplay, ul {
+    list-style:none;
+    display: flex;
+    gap: 10px;
+    margin: 10px auto;
 }
 
 #mainCalcDisplay input {
