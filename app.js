@@ -1,13 +1,8 @@
 // object containing all our lovely maths :)
 import operations from './operations.js';
 
-const clear_display = () => {
-    while(calc_display.firstChild) {
-        calc_display.removeChild(calc_display.firstChild);
-    };
-}
-
 const operate = (num1, char, num2) => {
+    clear_display(); // clear out display to make room for answer!
     if (char == '+') {
         return operations.calc_add(num1, num2);
     } else if (char == '-') {
@@ -25,69 +20,29 @@ const operate = (num1, char, num2) => {
 
 const calc_display = document.getElementById('calc-display');
 
-
-const clear = document.getElementById('clear-btn');
-clear.addEventListener('click', () => {
-    clear_display();
-});
-
-const pow = document.getElementById('pow-btn');
-pow.addEventListener('click', () => {
-    let li = document.createElement('li');
-    li.innerText = '^';
-    calc_display.appendChild(li);
-});
-
-const divide = document.getElementById('division-btn');
-divide.addEventListener('click', () => {
-    let li = document.createElement('li');
-    li.innerText = '/';
-    calc_display.appendChild(li);
-});
-
-const multiply = document.getElementById('multiplication-btn');
-multiply.addEventListener('click', () => {
-    let li = document.createElement('li');
-    li.innerText = '*';
-    calc_display.appendChild(li);
-});
-
-const subtract = document.getElementById('subtraction-btn');
-subtract.addEventListener('click', () => {
-    let li = document.createElement('li');
-    li.innerText = '-';
-    calc_display.appendChild(li);
-});
-
-const add = document.getElementById('addition-btn');
-add.addEventListener('click', () => {
-    let li = document.createElement('li');
-    li.innerText = '+';
-    calc_display.appendChild(li);
-})
-
-const equals = document.getElementById('equals-btn');
-equals.addEventListener('click', () => {
+//'main' function?
+// call this on equals button event
+// might be a monster, maybe import it from other document?
+const display = () => {
     let nodelist = calc_display.querySelectorAll('li');
     let display_arr = Array.from(nodelist, item => item.innerText);
     let numA = parseInt(display_arr[0]);
     let operator = display_arr[1];
     let numB = parseInt(display_arr[2]);
-    clear_display();
+
     calc_display.innerText = operate(numA, operator, numB);
-    // let display_arr = Array.from(nodelist, item => {
-    //     if(isNaN(item)) {
-    //         console.log('ahh');
-    //         return parseInt(item.innerText);
-    //     } else {
-    //         return item.innerText;
-    //     }
-    // });
-    // console.log(display_arr);
-});
+};
 
 
+// simple function to clear the display
+// called on clear-btn event
+const clear_display = () => {
+    while(calc_display.firstChild) {
+        calc_display.removeChild(calc_display.firstChild);
+    };
+}
 
+// NUMBER BUTTONS
 
 const nine = document.getElementById('nine');
 nine.addEventListener('click', () => {
@@ -150,4 +105,82 @@ one.addEventListener('click', () => {
     let li = document.createElement('li');
     li.innerText = '1';
     calc_display.appendChild(li);
+});
+
+const zero = document.getElementById('zero');
+zero.addEventListener('click', () => {
+    let li = document.createElement('li');
+    li.innerText = '0';
+    calc_display.appendChild(li);
+});
+
+const decimal = document.getElementById('decimal');
+decimal.addEventListener('click', () => {
+    let li = document.createElement('li');
+    li.innerText = '.';
+    calc_display.appendChild(li);
+});
+
+const negative = document.getElementById('negative');
+negative.addEventListener('click', () => {
+    let li = document.createElement('li');
+    li.innerText = '-';
+    calc_display.appendChild(li);
+});
+
+
+// OPERATION BUTTONS
+
+const clear = document.getElementById('clear-btn');
+clear.addEventListener('click', () => {
+    clear_display();
+});
+
+const pow = document.getElementById('pow-btn');
+pow.addEventListener('click', () => {
+    let li = document.createElement('li');
+    li.innerText = '^';
+    calc_display.appendChild(li);
+});
+
+const divide = document.getElementById('division-btn');
+divide.addEventListener('click', () => {
+    let li = document.createElement('li');
+    li.innerText = '/';
+    calc_display.appendChild(li);
+});
+
+const multiply = document.getElementById('multiplication-btn');
+multiply.addEventListener('click', () => {
+    let li = document.createElement('li');
+    li.innerText = '*';
+    calc_display.appendChild(li);
+});
+
+const subtract = document.getElementById('subtraction-btn');
+subtract.addEventListener('click', () => {
+    let li = document.createElement('li');
+    li.innerText = '-';
+    calc_display.appendChild(li);
+});
+
+const add = document.getElementById('addition-btn');
+add.addEventListener('click', () => {
+    let li = document.createElement('li');
+    li.innerText = '+';
+    calc_display.appendChild(li);
+});
+
+const equals = document.getElementById('equals-btn');
+equals.addEventListener('click', () => {
+    display();
+    // let display_arr = Array.from(nodelist, item => {
+    //     if(isNaN(item)) {
+    //         console.log('ahh');
+    //         return parseInt(item.innerText);
+    //     } else {
+    //         return item.innerText;
+    //     }
+    // });
+    // console.log(display_arr);
 });

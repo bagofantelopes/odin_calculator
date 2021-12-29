@@ -4,7 +4,7 @@ body {
     margin: 10px auto;
 }
 
-header ul{
+header h1{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -39,11 +39,10 @@ header ul{
     height: 50px;
 }
 
-#mainCalcDisplay, ul {
+#mainCalcDisplay ul {
     list-style:none;
     display: flex;
-    gap: 10px;
-    margin: 10px auto;
+    justify-content: right;
 }
 
 #mainCalcDisplay input {
@@ -51,11 +50,13 @@ header ul{
 }
 
 .controls-container {
+    border: 5px solid grey;
+    border-radius: 10%;
+    background-color: navy;
     display: flex;
     justify-content: center;
     margin: 10px auto;
-    align-self: stretch;
-    padding: 10px;
+    padding: 15px;
     gap: 10px;
 }
 
@@ -67,6 +68,7 @@ header ul{
 
 .operations-buttons-container {
     border: 1px solid white;
+    border-radius: 5%;
     background-color: grey;
     display: flex;
     flex-direction: column;
@@ -74,22 +76,30 @@ header ul{
 
 .operations-buttons-container button {
     background-color: lightslategray;
+    border-radius: 5%;
     color: white;
 }
 
 .num-buttons-container {
     border: 1px solid white;
+    border-radius: 5%;
     background-color: grey;
-    min-height: 100%;
+    height: auto;
     align-items: stretch;
 }
 
 .advanced-operations-container {
     border: 1px solid white;
-    height: 100px;
+    border-radius: 5%;
+    background-color: grey;
+    height: auto;
+    margin-bottom: 10px;
 }
 
 .sub-controls-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     height: max-content;
-    align-self: center;
+    border-radius: 5%;
 }
