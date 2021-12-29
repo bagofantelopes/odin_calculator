@@ -15,6 +15,8 @@ const calc_pow = (a, b) => Math.pow(a, b);
 // probably wont even need this function in the end
 const calc_round = a => +(Math.round(a + "e+2")  + "e-2");
 
+
+
 export default {
     calc_add, 
     calc_subtract, 

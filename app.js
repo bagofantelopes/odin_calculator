@@ -1,10 +1,12 @@
 // object containing all our lovely maths :)
 import operations from './operations.js';
 
+let re = /[^0-9]/g;
+
 const operate = (num1, char, num2) => {
     clear_display(); // clear out display to make room for answer!
     if (char == '+') {
-        return operations.calc_add(num1, num2);
+        return operations.calc_add(num1, num2+1);
     } else if (char == '-') {
         return operations.calc_subtract(num1, num2);
     } else if (char == '*') {
@@ -18,19 +20,34 @@ const operate = (num1, char, num2) => {
     }
 }
 
+const generate_equation = (arr) => {
+
+    let str = arr.join('');
+
+    let operators = [...str.matchAll(re)]; // makes an array of our operators
+    console.log(operators);
+
+    str = str.split(re); // makes an array of our operands
+    console.log(str);
+    
+    return str;
+}
+
 const calc_display = document.getElementById('calc-display');
 
-//'main' function?
-// call this on equals button event
-// might be a monster, maybe import it from other document?
 const display = () => {
     let nodelist = calc_display.querySelectorAll('li');
     let display_arr = Array.from(nodelist, item => item.innerText);
-    let numA = parseInt(display_arr[0]);
-    let operator = display_arr[1];
-    let numB = parseInt(display_arr[2]);
 
-    calc_display.innerText = operate(numA, operator, numB);
+    generate_equation(display_arr);
+
+    //calc_display.innerText = operate(numA, operator, numB);
+
+    // this is the bare minimum to make it work in a janky way
+    // let numA = parseInt(display_arr[0]);
+    // let operator = display_arr[1];
+    // let numB = parseInt(display_arr[2]);
+    // calc_display.innerText = operate(numA, operator, numB);
 };
 
 
