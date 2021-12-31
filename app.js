@@ -1,12 +1,13 @@
 // object containing all our lovely maths :)
 import operations from './operations.js';
 
-let re = /[^0-9]/g;
+// RegEx that finds all characters not numbers or decimal points (math operators!)
+let re = /[^0-9\.]/g; 
 
 const operate = (num1, char, num2) => {
     clear_display(); // clear out display to make room for answer!
     if (char == '+') {
-        return operations.calc_add(num1, num2+1);
+        return operations.calc_add(num1, num2);
     } else if (char == '-') {
         return operations.calc_subtract(num1, num2);
     } else if (char == '*') {
@@ -18,19 +19,20 @@ const operate = (num1, char, num2) => {
     } else {
         return 'ERR: SYNTAX'
     }
-}
+} 
 
-const generate_equation = (arr) => {
 
-    let str = arr.join('');
+const calculate = (arr) => {
+    // join the array into a single string
+    let nums = arr.join('');
+    // makes an array of operators based on the RegEx
+    let operators = [...nums.matchAll(re)]; 
+    // makes an array of operands
+    nums = nums.split(re); 
 
-    let operators = [...str.matchAll(re)]; // makes an array of our operators
-    console.log(operators);
-
-    str = str.split(re); // makes an array of our operands
-    console.log(str);
-    
-    return str;
+    return nums.reduce((prevValue, currValue, currIndex) => {
+        return operate(parseFloat(prevValue), operators[currIndex-1], parseFloat(currValue));
+    });
 }
 
 const calc_display = document.getElementById('calc-display');
@@ -39,15 +41,9 @@ const display = () => {
     let nodelist = calc_display.querySelectorAll('li');
     let display_arr = Array.from(nodelist, item => item.innerText);
 
-    generate_equation(display_arr);
-
-    //calc_display.innerText = operate(numA, operator, numB);
-
-    // this is the bare minimum to make it work in a janky way
-    // let numA = parseInt(display_arr[0]);
-    // let operator = display_arr[1];
-    // let numB = parseInt(display_arr[2]);
-    // calc_display.innerText = operate(numA, operator, numB);
+    let li = document.createElement('li');
+    li.innerText = calculate(display_arr);
+    calc_display.appendChild(li);
 };
 
 
@@ -141,10 +137,9 @@ decimal.addEventListener('click', () => {
 const negative = document.getElementById('negative');
 negative.addEventListener('click', () => {
     let li = document.createElement('li');
-    li.innerText = '-';
+    li.innerText = '(-';
     calc_display.appendChild(li);
 });
-
 
 // OPERATION BUTTONS
 
@@ -191,13 +186,4 @@ add.addEventListener('click', () => {
 const equals = document.getElementById('equals-btn');
 equals.addEventListener('click', () => {
     display();
-    // let display_arr = Array.from(nodelist, item => {
-    //     if(isNaN(item)) {
-    //         console.log('ahh');
-    //         return parseInt(item.innerText);
-    //     } else {
-    //         return item.innerText;
-    //     }
-    // });
-    // console.log(display_arr);
 });
