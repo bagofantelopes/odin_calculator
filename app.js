@@ -4,6 +4,7 @@ import operations from './operations.js';
 // RegEx that finds all characters not numbers or decimal points (math operators!)
 let re = /[^0-9\.]/g; 
 
+// function which calls the correct mathematical operations
 const operate = (num1, char, num2) => {
     clear_display(); // clear out display to make room for answer!
     if (char == '+') {
@@ -21,7 +22,8 @@ const operate = (num1, char, num2) => {
     }
 } 
 
-
+// function which generates the equations that are passed to the 
+// mathematical operations
 const calculate = (arr) => {
     // join the array into a single string
     let nums = arr.join('');
@@ -35,8 +37,9 @@ const calculate = (arr) => {
     });
 }
 
-const calc_display = document.getElementById('calc-display');
 
+// handles what appears in the main display when the equals button is called
+const calc_display = document.getElementById('calc-display');
 const display = () => {
     let nodelist = calc_display.querySelectorAll('li');
     let display_arr = Array.from(nodelist, item => item.innerText);
