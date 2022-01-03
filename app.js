@@ -25,6 +25,7 @@ const operate = (num1, char, num2) => {
 // function which generates the equations that are passed to the 
 // mathematical operations
 const calculate = (arr) => {
+    console.log(arr);
     // join the array into a single string
     let nums = arr.join('');
     // makes an array of operators based on the RegEx
@@ -68,22 +69,45 @@ const eventHandler = {
         },
         keydown(e) {
             let li = document.createElement('li');
-            li.innerText = e.target.innerText;
+            li.innerText = e.key;
             calc_display.appendChild(li);
+        },
+        keydownExtras(e) {
+            if (e.key === '=') {
+                display();
+            }
         },
         default(e) {
             console.log("unhandled event: %s", e.type);
         },
     },
     handleEvent(e) {
-        console.log(e.type);
+        console.log(e.type + e.key);
+        let b = document.querySelectorAll('button');
         switch (e.type) {
             case "keydown":
-                if (e.key == e.target.innerText)
-                    this.handlers.keydown(e);
+                b.forEach(button => {
+                    if (e.key === button.innerText) {
+                        this.handlers.keydown(e);
+                    } else if (e.key === 'Backspace') {
+                        calc_display.removeChild(calc_display.lastChild);
+                    } else if (e.key === '=') {
+                        this.handlers.keydownExtras(e);
+                    }
+                });
                 break;
             case "click":
-                this.handlers.click(e);
+                switch (e.target.innerText) {
+                    case "=":
+                        display()
+                        break;
+                    case "Clear":
+                        clear_display();
+                        break;
+                    default:
+                        this.handlers.click(e);
+                        break;
+                }
                 break;
             default:
                 this.handlers.default(e);
@@ -91,59 +115,20 @@ const eventHandler = {
     },
 }
 
+// window.addEventListener('keydown', eventHandler, true);
+
 // Generates event handlers for the number buttons
 document.querySelectorAll('.num-buttons-container button').forEach(button => {
+    window.addEventListener('keydown', eventHandler, true)
     button.addEventListener('click', eventHandler)
-    button.addEventListener('keydown', eventHandler, true)
 });
 
-// OPERATION BUTTONS
+// Generates event handlers for the operations buttons
+document.querySelectorAll('.operations-buttons-container button').forEach(button => {
+    window.addEventListener('keydown', eventHandler, true);
+    button.addEventListener('click', eventHandler)
 
-const clear = document.getElementById('clear-btn');
-clear.addEventListener('click', () => {
-    clear_display();
-});
-
-const pow = document.getElementById('pow-btn');
-pow.addEventListener('click', (e) => {
-    let li = document.createElement('li');
-    li.innerText = e.target.innerText;
-    calc_display.appendChild(li);
-});
-
-const divide = document.getElementById('division-btn');
-divide.addEventListener('click', (e) => {
-    let li = document.createElement('li');
-    li.innerText = e.target.innerText;
-    calc_display.appendChild(li);
-});
-
-const multiply = document.getElementById('multiplication-btn');
-multiply.addEventListener('click', (e) => {
-    let li = document.createElement('li');
-    li.innerText = e.target.innerText;
-    calc_display.appendChild(li);
-});
-
-const subtract = document.getElementById('subtraction-btn');
-subtract.addEventListener('click', (e) => {
-    let li = document.createElement('li');
-    li.innerText = e.target.innerText;
-    calc_display.appendChild(li);
-});
-
-const add = document.getElementById('addition-btn');
-
-
-add.addEventListener('click', eventHandler);
-add.addEventListener('keydown', eventHandler);
-
-const equals = document.getElementById('equals-btn');
-equals.addEventListener('click', () => {
-    display();
-});
-
-
+})
 
 // OTHER BUTTONS
 
