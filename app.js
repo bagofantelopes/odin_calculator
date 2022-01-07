@@ -1,30 +1,11 @@
 // object containing all our lovely maths :)
 import operations from './operations.js';
-
-let big_math = operations.big_brain_math;
+let math = operations.big_brain_math;
 
 // RegEx that finds all characters not numbers or decimal points (math operators!)
 let re = /[^0-9\.]/g;
-
+// RegEx to detect only lowercase a-z
 let re2 = /^[a-z]+$/
-
-// function which calls the correct mathematical operations
-const operate = (num1, char, num2) => {
-    clear_display(); // clear out display to make room for answer!
-    if (char == '+') {
-        return operations.calc_add(num1, num2);
-    } else if (char == '-') {
-        return operations.calc_subtract(num1, num2);
-    } else if (char == 'x') {
-        return operations.calc_multiply(num1, num2);
-    } else if (char == '/') {
-        return operations.calc_divide(num1, num2);
-    } else if (char == '^') {
-        return operations.calc_pow(num1, num2);
-    } else {
-        return 'ERR: SYNTAX'
-    }
-} 
 
 // function which generates the equations that are passed to the 
 // mathematical operations
@@ -35,16 +16,16 @@ const calculate = (arr) => {
     let operators = [...nums.matchAll(re)];
 
     // this clunky thing will catch all our trigs and logs
-    // Definitely a smoother way to do this with the RegEx but those hurt my brain
+    // Definitely a smoother way to do this with the RegEx but I was very tired at this point
     if (nums[0] == 'C' || nums[0] == 'S' || nums[0] == 'T' || nums[0] == 'L') {
-        return big_math.handle(nums);
+        return math.handleAdvanced(nums);
     }
 
     // makes an array of operands
     nums = nums.split(re);
-
+    clear_display(); // clear out display so input doesn't accidentally blend with the solution
     return nums.reduce((prevValue, currValue, currIndex) => {
-        return operate(parseFloat(prevValue), operators[currIndex-1], parseFloat(currValue));
+        return math.handle(parseFloat(prevValue), operators[currIndex-1], parseFloat(currValue));
     });
 }
 
@@ -58,8 +39,8 @@ const display = () => {
     let li = document.createElement('li');
     li.innerText = calculate(arr);
     calc_display.appendChild(li);
+    
 };
-
 
 // simple function to clear the display
 // called when clear button is pressed
@@ -67,7 +48,18 @@ const clear_display = () => {
     while(calc_display.firstChild) {
         calc_display.removeChild(calc_display.firstChild);
     };
+    key_arr = [];
 }
+
+// simple function to do a backspace/'undo'
+// if the nodelist in calc_display is empty it throws an error, but doesn't break anything
+const backspace = () => {
+    try {
+        calc_display.removeChild(calc_display.lastChild);
+    } catch (error) {
+        console.log('Pay no heed to the error behind the curtain!');
+    }
+};
 
 // object to handle most events
 const eventHandler = {
@@ -77,10 +69,10 @@ const eventHandler = {
             li.innerText = e.target.innerText;
             calc_display.appendChild(li);
         },
-        keydown(e) {         
+        keydown(e) {
             if (e.key == '=') {
                 display();
-            } else { 
+            } else {
                 let li = document.createElement('li');
                 li.innerText = e.key;
                 calc_display.appendChild(li);
@@ -96,18 +88,22 @@ const eventHandler = {
         },
     },
     handleEvent(e) {
-        if (e.key === 'Backspace') {
-            calc_display.removeChild(calc_display.lastChild);
-        } else if (e.key === 'Enter') {
-            display();
+        // these won't fire if I put them in the switch statement below
+        // for the life of me can't figure it out, so here they are!
+        if (e.type == 'keydown') {
+            if (e.key === 'Backspace') {
+                backspace();
+            } else if (e.key === 'Enter') {
+                display();
+            }
+    
+            // grabs certain keypresses and puts them in an array
+            // lets us call the advanced operations buttons with the keyboard!
+            if (re2.test(e.key)) {
+                key_arr.push(e.key.toUpperCase());
+            }
         }
-
-        // grabs certain keypresses and puts them in an array
-        // lets us call the advanced operations buttons with the keyboard!
-        if (re2.test(e.key)) {
-            key_arr.push(e.key.toUpperCase());
-        }
-
+    
         let b = document.querySelectorAll('button'); // gets a nodelist of all the buttons
         switch (e.type) {
 
@@ -135,6 +131,9 @@ const eventHandler = {
                     case "Clear":
                         clear_display();
                         break;
+                    case "BACK":
+                        backspace();
+                        break;
                     default:
                         this.handlers.click(e);
                         break;
@@ -146,8 +145,6 @@ const eventHandler = {
         }
     },
 }
-
-// window.addEventListener('keydown', eventHandler, true);
 
 // Generates event handlers for the number buttons
 document.querySelectorAll('.num-buttons-container button').forEach(button => {
@@ -170,20 +167,3 @@ document.querySelectorAll('.advanced-operations-container button').forEach(butto
 // generic top level event handler for a few tricksy keydown events that don't want to fire otherwise
 window.addEventListener('keydown', eventHandler, true);
 let key_arr = [];
-
-// OTHER BUTTONS
-
-const backSpace = document.getElementById('backspace-btn');
-backSpace.addEventListener('click', () => {
-    calc_display.removeChild(calc_display.lastChild);
-});
-
-const LOG = document.getElementById('log10');
-LOG.addEventListener('click', () => {
-    let li = document.createElement('li');
-});
-
-const LN = document.getElementById('ln');
-LN.addEventListener('click', () => {
-    let li = document.createElement('li');
-});
