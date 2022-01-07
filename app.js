@@ -25,7 +25,7 @@ const operate = (num1, char, num2) => {
 // function which generates the equations that are passed to the 
 // mathematical operations
 const calculate = (arr) => {
-    console.log(arr);
+    //console.log(arr);
     // join the array into a single string
     let nums = arr.join('');
     // makes an array of operators based on the RegEx
@@ -59,7 +59,7 @@ const clear_display = () => {
     };
 }
 
-// general purpose object to handle all events
+// object to handle all events
 const eventHandler = {
     handlers: {
         click(e) {
@@ -68,13 +68,13 @@ const eventHandler = {
             calc_display.appendChild(li);
         },
         keydown(e) {
-            let li = document.createElement('li');
-            li.innerText = e.key;
-            calc_display.appendChild(li);
-        },
-        keydownExtras(e) {
-            if (e.key === '=') {
+            
+            if (e.key == '=') {
                 display();
+            } else { 
+                let li = document.createElement('li');
+                li.innerText = e.key;
+                calc_display.appendChild(li);
             }
         },
         default(e) {
@@ -82,17 +82,12 @@ const eventHandler = {
         },
     },
     handleEvent(e) {
-        console.log(e.type + e.key);
-        let b = document.querySelectorAll('button');
+        let b = document.querySelectorAll('button'); // gets a nodelist of all the buttons
         switch (e.type) {
             case "keydown":
                 b.forEach(button => {
                     if (e.key === button.innerText) {
                         this.handlers.keydown(e);
-                    } else if (e.key === 'Backspace') {
-                        calc_display.removeChild(calc_display.lastChild);
-                    } else if (e.key === '=') {
-                        this.handlers.keydownExtras(e);
                     }
                 });
                 break;
@@ -111,6 +106,7 @@ const eventHandler = {
                 break;
             default:
                 this.handlers.default(e);
+                break;
         }
     },
 }
@@ -128,9 +124,19 @@ document.querySelectorAll('.operations-buttons-container button').forEach(button
     window.addEventListener('keydown', eventHandler, true);
     button.addEventListener('click', eventHandler)
 
-})
+});
+
 
 // OTHER BUTTONS
+
+// if these aren't declared at window scope they don't seem to fire correctly
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace') {
+        calc_display.removeChild(calc_display.lastChild);
+    } else if (e.key === 'Enter') {
+        display();
+    }
+});
 
 const backSpace = document.getElementById('backspace-btn');
 backSpace.addEventListener('click', () => {
