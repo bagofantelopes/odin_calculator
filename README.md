@@ -1,0 +1,1 @@
+To use the SIN, LOG, etc. buttons with the keyboard just type them out.
