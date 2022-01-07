@@ -1,4 +1,4 @@
-A simple calculator app done for the Odin Project.
+A simple calculator app done for the Odin Project by me, Travis F.
 A bit rough around the edges but for the most part I'm happy with how it turned out.
 Definitely could use some touching up in future.
 
