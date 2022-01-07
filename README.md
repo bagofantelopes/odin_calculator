@@ -6,3 +6,4 @@ Definitely could use some touching up in future.
 Has keyboard support (for the most part). Everything you'd expect to work, will work.
 Except * for multiplication. It was really picky about that, so I left it alone.
 To use the SIN, LOG, etc. buttons with the keyboard just type them out (in lowercase).
+If that functionality breaks just hit "Clear".
